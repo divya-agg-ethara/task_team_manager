@@ -7,7 +7,15 @@ const validate = (schema, property = "body") => (req, _res, next) => {
         next(result.error);
         return;
     }
-    req[property] = result.data;
+    if (property === "query") {
+        req.validatedQuery = result.data;
+    }
+    else if (property === "params") {
+        req.validatedParams = result.data;
+    }
+    else {
+        req.body = result.data;
+    }
     next();
 };
 exports.validate = validate;

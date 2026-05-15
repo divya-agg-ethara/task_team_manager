@@ -9,9 +9,22 @@
 * 🟢 You can import this file directly.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProjectRole = void 0;
+exports.TaskPriority = exports.TaskStatus = exports.ProjectRole = void 0;
 exports.ProjectRole = {
     ADMIN: 'ADMIN',
     MEMBER: 'MEMBER'
+};
+exports.TaskStatus = {
+    TODO: 'TODO',
+    IN_PROGRESS: 'IN_PROGRESS',
+    IN_REVIEW: 'IN_REVIEW',
+    DONE: 'DONE',
+    CANCELLED: 'CANCELLED'
+};
+exports.TaskPriority = {
+    LOW: 'LOW',
+    MEDIUM: 'MEDIUM',
+    HIGH: 'HIGH',
+    URGENT: 'URGENT'
 };
 //# sourceMappingURL=enums.js.map

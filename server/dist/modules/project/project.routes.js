@@ -6,6 +6,7 @@ const authenticate_1 = require("../../middleware/authenticate");
 const authorize_1 = require("../../middleware/authorize");
 const validate_1 = require("../../middleware/validate");
 const project_controller_1 = require("./project.controller");
+const task_1 = require("../task");
 const project_validation_1 = require("./project.validation");
 const projectRouter = (0, express_1.Router)();
 projectRouter.use(authenticate_1.authenticate);
@@ -17,5 +18,6 @@ projectRouter.delete("/:projectId", (0, validate_1.validate)(project_validation_
 projectRouter.post("/:projectId/members", (0, validate_1.validate)(project_validation_1.projectIdParamSchema, "params"), (0, authorize_1.authorizeProject)(config_1.PROJECT_ROLES.ADMIN), (0, validate_1.validate)(project_validation_1.addMemberSchema), project_controller_1.addMember);
 projectRouter.get("/:projectId/members", (0, validate_1.validate)(project_validation_1.projectIdParamSchema, "params"), (0, authorize_1.authorizeProject)(config_1.PROJECT_ROLES.ADMIN, config_1.PROJECT_ROLES.MEMBER), project_controller_1.listMembers);
 projectRouter.delete("/:projectId/members/:memberId", (0, validate_1.validate)(project_validation_1.memberIdParamSchema, "params"), (0, authorize_1.authorizeProject)(config_1.PROJECT_ROLES.ADMIN), project_controller_1.removeMember);
+projectRouter.use("/:projectId/tasks", task_1.taskRouter);
 exports.default = projectRouter;
 //# sourceMappingURL=project.routes.js.map

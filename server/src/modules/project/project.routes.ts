@@ -13,6 +13,7 @@ import {
   removeMember,
   updateProject,
 } from "./project.controller";
+import { taskRouter } from "../task";
 import {
   addMemberSchema,
   createProjectSchema,
@@ -71,5 +72,7 @@ projectRouter.delete(
   authorizeProject(PROJECT_ROLES.ADMIN),
   removeMember,
 );
+
+projectRouter.use("/:projectId/tasks", taskRouter);
 
 export default projectRouter;

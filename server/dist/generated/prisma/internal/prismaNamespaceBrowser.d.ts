@@ -29,6 +29,7 @@ export declare const ModelName: {
     readonly User: "User";
     readonly Project: "Project";
     readonly ProjectMember: "ProjectMember";
+    readonly Task: "Task";
 };
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 export declare const TransactionIsolationLevel: {
@@ -65,6 +66,21 @@ export declare const ProjectMemberScalarFieldEnum: {
     readonly updatedAt: "updatedAt";
 };
 export type ProjectMemberScalarFieldEnum = (typeof ProjectMemberScalarFieldEnum)[keyof typeof ProjectMemberScalarFieldEnum];
+export declare const TaskScalarFieldEnum: {
+    readonly id: "id";
+    readonly projectId: "projectId";
+    readonly title: "title";
+    readonly description: "description";
+    readonly status: "status";
+    readonly priority: "priority";
+    readonly dueDate: "dueDate";
+    readonly completedAt: "completedAt";
+    readonly createdById: "createdById";
+    readonly assignedToId: "assignedToId";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+};
+export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum];
 export declare const SortOrder: {
     readonly asc: "asc";
     readonly desc: "desc";

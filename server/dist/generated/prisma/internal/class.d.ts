@@ -150,6 +150,17 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
     get projectMember(): Prisma.ProjectMemberDelegate<ExtArgs, {
         omit: OmitOpts;
     }>;
+    /**
+     * `prisma.task`: Exposes CRUD operations for the **Task** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Tasks
+      * const tasks = await prisma.task.findMany()
+      * ```
+      */
+    get task(): Prisma.TaskDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
 }
 export declare function getPrismaClientClass(): PrismaClientConstructor;
 //# sourceMappingURL=class.d.ts.map

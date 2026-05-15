@@ -48,7 +48,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.ProjectMemberScalarFieldEnum = exports.ProjectScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
+exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.TaskScalarFieldEnum = exports.ProjectMemberScalarFieldEnum = exports.ProjectScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
 const runtime = __importStar(require("@prisma/client/runtime/index-browser"));
 exports.Decimal = runtime.Decimal;
 exports.NullTypes = {
@@ -77,7 +77,8 @@ exports.AnyNull = runtime.AnyNull;
 exports.ModelName = {
     User: 'User',
     Project: 'Project',
-    ProjectMember: 'ProjectMember'
+    ProjectMember: 'ProjectMember',
+    Task: 'Task'
 };
 /*
  * Enums
@@ -109,6 +110,20 @@ exports.ProjectMemberScalarFieldEnum = {
     userId: 'userId',
     projectId: 'projectId',
     role: 'role',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+exports.TaskScalarFieldEnum = {
+    id: 'id',
+    projectId: 'projectId',
+    title: 'title',
+    description: 'description',
+    status: 'status',
+    priority: 'priority',
+    dueDate: 'dueDate',
+    completedAt: 'completedAt',
+    createdById: 'createdById',
+    assignedToId: 'assignedToId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };

@@ -13,6 +13,13 @@ export const validate =
       return;
     }
 
-    req[property] = result.data as (typeof req)[typeof property];
+    if (property === "query") {
+      req.validatedQuery = result.data;
+    } else if (property === "params") {
+      req.validatedParams = result.data;
+    } else {
+      req.body = result.data;
+    }
+
     next();
   };

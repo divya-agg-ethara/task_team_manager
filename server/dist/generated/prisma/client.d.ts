@@ -36,4 +36,9 @@ export type Project = Prisma.ProjectModel;
  *
  */
 export type ProjectMember = Prisma.ProjectMemberModel;
+/**
+ * Model Task
+ *
+ */
+export type Task = Prisma.TaskModel;
 //# sourceMappingURL=client.d.ts.map

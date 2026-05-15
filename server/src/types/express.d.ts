@@ -19,6 +19,8 @@ declare global {
       user?: JwtPayload;
       currentUser?: PublicUser;
       projectMembership?: ProjectMembershipContext;
+      validatedQuery?: unknown;
+      validatedParams?: unknown;
     }
   }
 }
