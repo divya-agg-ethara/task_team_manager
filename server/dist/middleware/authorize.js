@@ -3,19 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.authorizeProject = void 0;
 const client_1 = require("../prisma/client");
 const utils_1 = require("../utils");
+function parseParam(value) {
+    return Array.isArray(value) ? value[0] : value;
+}
 /**
  * Project-level role authorization.
- * Use after authenticate on routes with :projectId param.
- * Implemented for future project/task modules.
+ * Attaches membership to req.projectMembership when authorized.
  */
 const authorizeProject = (...allowedRoles) => (0, utils_1.asyncHandler)(async (req, _res, next) => {
     if (!req.user?.sub) {
         next(utils_1.ApiError.unauthorized());
         return;
     }
-    const projectId = Array.isArray(req.params.projectId)
-        ? req.params.projectId[0]
-        : req.params.projectId;
+    const projectId = parseParam(req.params.projectId);
     if (!projectId) {
         next(utils_1.ApiError.badRequest("Project ID is required"));
         return;
@@ -36,6 +36,12 @@ const authorizeProject = (...allowedRoles) => (0, utils_1.asyncHandler)(async (r
         next(utils_1.ApiError.forbidden("Insufficient project permissions"));
         return;
     }
+    req.projectMembership = {
+        id: membership.id,
+        userId: membership.userId,
+        projectId: membership.projectId,
+        role: membership.role,
+    };
     next();
 });
 exports.authorizeProject = authorizeProject;

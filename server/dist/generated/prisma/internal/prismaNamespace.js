@@ -128,6 +128,7 @@ exports.ProjectScalarFieldEnum = {
     id: 'id',
     name: 'name',
     description: 'description',
+    createdById: 'createdById',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };

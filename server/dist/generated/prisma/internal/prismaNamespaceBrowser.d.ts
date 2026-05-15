@@ -51,6 +51,7 @@ export declare const ProjectScalarFieldEnum: {
     readonly id: "id";
     readonly name: "name";
     readonly description: "description";
+    readonly createdById: "createdById";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
 };

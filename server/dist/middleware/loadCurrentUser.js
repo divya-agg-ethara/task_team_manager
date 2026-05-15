@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loadCurrentUser = void 0;
-const auth_1 = require("../modules/auth");
+const auth_service_1 = require("../modules/auth/auth.service");
 const utils_1 = require("../utils");
 /**
  * Loads the authenticated user from the database and attaches to req.currentUser.
@@ -12,7 +12,7 @@ exports.loadCurrentUser = (0, utils_1.asyncHandler)(async (req, _res, next) => {
         next(utils_1.ApiError.unauthorized());
         return;
     }
-    const user = await auth_1.authService.getUserById(req.user.sub);
+    const user = await auth_service_1.authService.getUserById(req.user.sub);
     if (!user) {
         next(utils_1.ApiError.unauthorized("User no longer exists"));
         return;

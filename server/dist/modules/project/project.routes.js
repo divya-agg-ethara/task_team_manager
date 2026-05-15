@@ -1,0 +1,21 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const config_1 = require("../../config");
+const authenticate_1 = require("../../middleware/authenticate");
+const authorize_1 = require("../../middleware/authorize");
+const validate_1 = require("../../middleware/validate");
+const project_controller_1 = require("./project.controller");
+const project_validation_1 = require("./project.validation");
+const projectRouter = (0, express_1.Router)();
+projectRouter.use(authenticate_1.authenticate);
+projectRouter.post("/", (0, validate_1.validate)(project_validation_1.createProjectSchema), project_controller_1.createProject);
+projectRouter.get("/", project_controller_1.listProjects);
+projectRouter.get("/:projectId", (0, validate_1.validate)(project_validation_1.projectIdParamSchema, "params"), (0, authorize_1.authorizeProject)(config_1.PROJECT_ROLES.ADMIN, config_1.PROJECT_ROLES.MEMBER), project_controller_1.getProject);
+projectRouter.patch("/:projectId", (0, validate_1.validate)(project_validation_1.projectIdParamSchema, "params"), (0, authorize_1.authorizeProject)(config_1.PROJECT_ROLES.ADMIN), (0, validate_1.validate)(project_validation_1.updateProjectSchema), project_controller_1.updateProject);
+projectRouter.delete("/:projectId", (0, validate_1.validate)(project_validation_1.projectIdParamSchema, "params"), (0, authorize_1.authorizeProject)(config_1.PROJECT_ROLES.ADMIN), project_controller_1.deleteProject);
+projectRouter.post("/:projectId/members", (0, validate_1.validate)(project_validation_1.projectIdParamSchema, "params"), (0, authorize_1.authorizeProject)(config_1.PROJECT_ROLES.ADMIN), (0, validate_1.validate)(project_validation_1.addMemberSchema), project_controller_1.addMember);
+projectRouter.get("/:projectId/members", (0, validate_1.validate)(project_validation_1.projectIdParamSchema, "params"), (0, authorize_1.authorizeProject)(config_1.PROJECT_ROLES.ADMIN, config_1.PROJECT_ROLES.MEMBER), project_controller_1.listMembers);
+projectRouter.delete("/:projectId/members/:memberId", (0, validate_1.validate)(project_validation_1.memberIdParamSchema, "params"), (0, authorize_1.authorizeProject)(config_1.PROJECT_ROLES.ADMIN), project_controller_1.removeMember);
+exports.default = projectRouter;
+//# sourceMappingURL=project.routes.js.map
