@@ -1,17 +1,11 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authenticate = authenticate;
 exports.optionalAuthenticate = optionalAuthenticate;
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const config_1 = require("../config");
+const jwt_1 = require("../lib/jwt");
 const utils_1 = require("../utils");
 /**
- * JWT authentication scaffold.
- * Verifies Bearer token and attaches decoded payload to req.user.
- * Implement login/token issuance in auth module later.
+ * Verifies JWT Bearer token and attaches decoded payload to req.user.
  */
 function authenticate(req, _res, next) {
     const authHeader = req.headers.authorization;
@@ -21,8 +15,7 @@ function authenticate(req, _res, next) {
     }
     const token = authHeader.slice(7);
     try {
-        const payload = jsonwebtoken_1.default.verify(token, config_1.env.JWT_SECRET);
-        req.user = payload;
+        req.user = (0, jwt_1.verifyAccessToken)(token);
         next();
     }
     catch {
@@ -40,8 +33,7 @@ function optionalAuthenticate(req, _res, next) {
     }
     const token = authHeader.slice(7);
     try {
-        const payload = jsonwebtoken_1.default.verify(token, config_1.env.JWT_SECRET);
-        req.user = payload;
+        req.user = (0, jwt_1.verifyAccessToken)(token);
     }
     catch {
         // Invalid token on optional routes — proceed without user

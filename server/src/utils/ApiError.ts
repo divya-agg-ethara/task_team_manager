@@ -34,6 +34,10 @@ export class ApiError extends Error {
     return new ApiError(StatusCodes.NOT_FOUND, message);
   }
 
+  static conflict(message: string, details?: unknown): ApiError {
+    return new ApiError(StatusCodes.CONFLICT, message, { details });
+  }
+
   static internal(message = "Internal server error"): ApiError {
     return new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, message, {
       isOperational: false,

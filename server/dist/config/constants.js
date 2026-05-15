@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ROLES = exports.API_PREFIX = void 0;
+exports.BCRYPT_SALT_ROUNDS = exports.PROJECT_ROLES = exports.API_PREFIX = void 0;
 exports.API_PREFIX = "/api/v1";
-exports.ROLES = {
-    USER: "USER",
+exports.PROJECT_ROLES = {
     ADMIN: "ADMIN",
+    MEMBER: "MEMBER",
 };
+exports.BCRYPT_SALT_ROUNDS = 12;
 //# sourceMappingURL=constants.js.map

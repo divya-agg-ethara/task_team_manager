@@ -48,7 +48,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
+exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.ProjectMemberScalarFieldEnum = exports.ProjectScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
 const runtime = __importStar(require("@prisma/client/runtime/index-browser"));
 exports.Decimal = runtime.Decimal;
 exports.NullTypes = {
@@ -74,7 +74,11 @@ exports.JsonNull = runtime.JsonNull;
  * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
  */
 exports.AnyNull = runtime.AnyNull;
-exports.ModelName = {};
+exports.ModelName = {
+    User: 'User',
+    Project: 'Project',
+    ProjectMember: 'ProjectMember'
+};
 /*
  * Enums
  */
@@ -84,4 +88,39 @@ exports.TransactionIsolationLevel = runtime.makeStrictEnum({
     RepeatableRead: 'RepeatableRead',
     Serializable: 'Serializable'
 });
+exports.UserScalarFieldEnum = {
+    id: 'id',
+    email: 'email',
+    password: 'password',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+exports.ProjectScalarFieldEnum = {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+exports.ProjectMemberScalarFieldEnum = {
+    id: 'id',
+    userId: 'userId',
+    projectId: 'projectId',
+    role: 'role',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+exports.SortOrder = {
+    asc: 'asc',
+    desc: 'desc'
+};
+exports.QueryMode = {
+    default: 'default',
+    insensitive: 'insensitive'
+};
+exports.NullsOrder = {
+    first: 'first',
+    last: 'last'
+};
 //# sourceMappingURL=prismaNamespaceBrowser.js.map

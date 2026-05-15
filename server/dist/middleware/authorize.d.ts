@@ -1,8 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
-import type { Role } from "../config";
+import type { ProjectRole } from "../config";
 /**
- * Role-based authorization scaffold.
- * Use after authenticate middleware on protected routes.
+ * Project-level role authorization.
+ * Use after authenticate on routes with :projectId param.
+ * Implemented for future project/task modules.
  */
-export declare const authorize: (...allowedRoles: Role[]) => (req: Request, _res: Response, next: NextFunction) => void;
+export declare const authorizeProject: (...allowedRoles: ProjectRole[]) => (req: Request, res: Response, next: NextFunction) => void;
 //# sourceMappingURL=authorize.d.ts.map

@@ -1,3 +1,4 @@
+import { Prisma } from "../generated/prisma/client";
 import type { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { ZodError } from "zod";
@@ -35,6 +36,12 @@ export function errorHandler(
       message: issue.message,
     }));
     isOperational = true;
+  } else if (err instanceof Prisma.PrismaClientKnownRequestError) {
+    if (err.code === "P2002") {
+      statusCode = StatusCodes.CONFLICT;
+      message = "A record with this value already exists";
+      isOperational = true;
+    }
   }
 
   if (!isOperational && env.NODE_ENV === "production") {

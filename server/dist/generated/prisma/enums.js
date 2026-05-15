@@ -9,4 +9,9 @@
 * 🟢 You can import this file directly.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProjectRole = void 0;
+exports.ProjectRole = {
+    ADMIN: 'ADMIN',
+    MEMBER: 'MEMBER'
+};
 //# sourceMappingURL=enums.js.map

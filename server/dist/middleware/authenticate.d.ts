@@ -1,8 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 /**
- * JWT authentication scaffold.
- * Verifies Bearer token and attaches decoded payload to req.user.
- * Implement login/token issuance in auth module later.
+ * Verifies JWT Bearer token and attaches decoded payload to req.user.
  */
 export declare function authenticate(req: Request, _res: Response, next: NextFunction): void;
 /**

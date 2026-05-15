@@ -1,23 +1,50 @@
 import type { NextFunction, Request, Response } from "express";
-import type { Role } from "../config";
-import { ApiError } from "../utils";
+import type { ProjectRole } from "../config";
+import { prisma } from "../prisma/client";
+import { asyncHandler, ApiError } from "../utils";
 
 /**
- * Role-based authorization scaffold.
- * Use after authenticate middleware on protected routes.
+ * Project-level role authorization.
+ * Use after authenticate on routes with :projectId param.
+ * Implemented for future project/task modules.
  */
-export const authorize =
-  (...allowedRoles: Role[]) =>
-  (req: Request, _res: Response, next: NextFunction): void => {
-    if (!req.user) {
-      next(ApiError.unauthorized());
-      return;
-    }
+export const authorizeProject =
+  (...allowedRoles: ProjectRole[]) =>
+  asyncHandler(
+    async (req: Request, _res: Response, next: NextFunction): Promise<void> => {
+      if (!req.user?.sub) {
+        next(ApiError.unauthorized());
+        return;
+      }
 
-    if (!allowedRoles.includes(req.user.role)) {
-      next(ApiError.forbidden("Insufficient permissions"));
-      return;
-    }
+      const projectId = Array.isArray(req.params.projectId)
+        ? req.params.projectId[0]
+        : req.params.projectId;
 
-    next();
-  };
+      if (!projectId) {
+        next(ApiError.badRequest("Project ID is required"));
+        return;
+      }
+
+      const membership = await prisma.projectMember.findUnique({
+        where: {
+          userId_projectId: {
+            userId: req.user.sub,
+            projectId,
+          },
+        },
+      });
+
+      if (!membership) {
+        next(ApiError.forbidden("You are not a member of this project"));
+        return;
+      }
+
+      if (!allowedRoles.includes(membership.role as ProjectRole)) {
+        next(ApiError.forbidden("Insufficient project permissions"));
+        return;
+      }
+
+      next();
+    },
+  );

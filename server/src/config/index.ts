@@ -1,4 +1,4 @@
 export { env } from "./env";
 export type { Env } from "./env";
-export { API_PREFIX, ROLES } from "./constants";
-export type { Role } from "./constants";
+export { API_PREFIX, PROJECT_ROLES, BCRYPT_SALT_ROUNDS } from "./constants";
+export type { ProjectRole } from "./constants";

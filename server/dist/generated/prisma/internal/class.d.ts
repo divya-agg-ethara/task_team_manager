@@ -117,6 +117,39 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
     $extends: runtime.Types.Extensions.ExtendsHook<"extends", Prisma.TypeMapCb<OmitOpts>, ExtArgs, runtime.Types.Utils.Call<Prisma.TypeMapCb<OmitOpts>, {
         extArgs: ExtArgs;
     }>>;
+    /**
+ * `prisma.user`: Exposes CRUD operations for the **User** model.
+  * Example usage:
+  * ```ts
+  * // Fetch zero or more Users
+  * const users = await prisma.user.findMany()
+  * ```
+  */
+    get user(): Prisma.UserDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.project`: Exposes CRUD operations for the **Project** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Projects
+      * const projects = await prisma.project.findMany()
+      * ```
+      */
+    get project(): Prisma.ProjectDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.projectMember`: Exposes CRUD operations for the **ProjectMember** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more ProjectMembers
+      * const projectMembers = await prisma.projectMember.findMany()
+      * ```
+      */
+    get projectMember(): Prisma.ProjectMemberDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
 }
 export declare function getPrismaClientClass(): PrismaClientConstructor;
 //# sourceMappingURL=class.d.ts.map

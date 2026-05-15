@@ -26,6 +26,9 @@ class ApiError extends Error {
     static notFound(message = "Resource not found") {
         return new ApiError(http_status_codes_1.StatusCodes.NOT_FOUND, message);
     }
+    static conflict(message, details) {
+        return new ApiError(http_status_codes_1.StatusCodes.CONFLICT, message, { details });
+    }
     static internal(message = "Internal server error") {
         return new ApiError(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR, message, {
             isOperational: false,
