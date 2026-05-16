@@ -3,16 +3,17 @@
 import { motion } from "framer-motion";
 import { History } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { surfaces } from "@/lib/ui/surfaces";
+import { cn } from "@/lib/utils";
 import { DashboardEmpty } from "@/components/dashboard/empty-state";
 import { recentActivityPlaceholder } from "@/components/dashboard/mock-data";
-import { cn } from "@/lib/utils";
 
 export function ActivityFeed() {
   const items = recentActivityPlaceholder;
   const hasItems = items.length > 0;
 
   return (
-    <Card className="border-border/50 bg-card/90 shadow-sm ring-1 ring-border/25 backdrop-blur-sm transition-shadow duration-300 hover:shadow-md">
+    <Card className={cn(surfaces.card, "transition-shadow duration-300 hover:shadow-[0_8px_32px_-12px_hsl(var(--foreground)/0.08)]")}>
       <CardHeader className="flex flex-row items-center justify-between gap-2 pb-3">
         <div>
           <CardTitle className="text-base font-semibold tracking-tight">

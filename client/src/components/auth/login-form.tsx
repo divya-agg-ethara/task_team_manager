@@ -8,7 +8,8 @@ import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { loginRequest, AuthApiError } from "@/lib/api/auth";
+import { loginRequest } from "@/lib/api/auth";
+import { parseApiError } from "@/lib/api/errors";
 import {
   loginFormResolver,
   type LoginFormInput,
@@ -45,11 +46,7 @@ export function LoginForm() {
       toast.success("Welcome back");
       router.replace(safeRedirect);
     } catch (e) {
-      if (e instanceof AuthApiError) {
-        toast.error(e.message);
-        return;
-      }
-      toast.error("Something went wrong. Try again.");
+      toast.error(parseApiError(e, "Unable to sign in. Check your credentials."));
     }
   }
 

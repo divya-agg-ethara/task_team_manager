@@ -3,6 +3,9 @@
 import { ThemeProvider } from "next-themes";
 import type { ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
+import { AuthRehydration } from "@/components/auth/auth-rehydration";
+import { SessionSync } from "@/components/auth/session-sync";
+import { AccentSync } from "@/components/preferences/accent-sync";
 import { QueryProvider } from "@/components/providers/query-provider";
 
 export function AppProviders({ children }: { children: ReactNode }) {
@@ -12,8 +15,11 @@ export function AppProviders({ children }: { children: ReactNode }) {
         attribute="class"
         defaultTheme="system"
         enableSystem
-        disableTransitionOnChange
+        disableTransitionOnChange={false}
       >
+        <AuthRehydration />
+        <AccentSync />
+        <SessionSync />
         {children}
         <Toaster position="top-right" richColors closeButton />
       </ThemeProvider>

@@ -32,6 +32,7 @@ export default function RootLayout({
     <html
       lang="en"
       className="font-sans"
+      data-accent="copper"
       suppressHydrationWarning
     >
       <body

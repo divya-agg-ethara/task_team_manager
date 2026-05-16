@@ -8,7 +8,8 @@ import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { signupRequest, AuthApiError } from "@/lib/api/auth";
+import { signupRequest } from "@/lib/api/auth";
+import { parseApiError } from "@/lib/api/errors";
 import {
   signupFormResolver,
   type SignupFormInput,
@@ -45,11 +46,7 @@ export function SignupForm() {
       toast.success("Account created — you’re in");
       router.replace(safeRedirect);
     } catch (e) {
-      if (e instanceof AuthApiError) {
-        toast.error(e.message);
-        return;
-      }
-      toast.error("Could not sign up. Try again.");
+      toast.error(parseApiError(e, "Could not create your account."));
     }
   }
 

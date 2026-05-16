@@ -7,6 +7,16 @@ datasource db {
   provider = "postgresql"
 }
 
+enum WorkspaceRole {
+  ADMIN
+  MEMBER
+}
+
+enum TeamMemberRole {
+  ADMIN
+  MEMBER
+}
+
 enum ProjectRole {
   ADMIN
   MEMBER
@@ -28,22 +38,27 @@ enum TaskPriority {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
+  id        String        @id @default(cuid())
+  email     String        @unique
   password  String
   name      String
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  role      WorkspaceRole @default(MEMBER)
+  createdAt DateTime      @default(now()) @map("created_at")
+  updatedAt DateTime      @updatedAt @map("updated_at")
 
-  projectMembers  ProjectMember[]
-  createdProjects Project[]       @relation("ProjectCreator")
-  createdTasks    Task[]          @relation("TaskCreator")
-  assignedTasks   Task[]          @relation("TaskAssignee")
+  projectMembers       ProjectMember[]
+  teamMembers          TeamMember[]
+  createdProjects      Project[]            @relation("ProjectCreator")
+  createdTeams         Team[]               @relation("TeamCreator")
+  createdTasks         Task[]               @relation("TaskCreator")
+  assignedTasks        Task[]               @relation("TaskAssignee")
+  performance          MemberPerformance?
+  performanceUpdates   MemberPerformance[]  @relation("PerformanceUpdater")
 
   @@map("users")
 }
 
-model Project {
+model Team {
   id          String   @id @default(cuid())
   name        String
   description String?
@@ -51,11 +66,63 @@ model Project {
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
+  createdBy User         @relation("TeamCreator", fields: [createdById], references: [id], onDelete: Restrict)
+  members   TeamMember[]
+  projects  Project[]
+
+  @@index([createdById])
+  @@map("teams")
+}
+
+model TeamMember {
+  id        String         @id @default(cuid())
+  teamId    String         @map("team_id")
+  userId    String         @map("user_id")
+  role      TeamMemberRole @default(MEMBER)
+  createdAt DateTime       @default(now()) @map("created_at")
+  updatedAt DateTime       @updatedAt @map("updated_at")
+
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, userId])
+  @@index([userId])
+  @@index([teamId])
+  @@map("team_members")
+}
+
+model MemberPerformance {
+  id          String   @id @default(cuid())
+  userId      String   @unique @map("user_id")
+  score       Int      @default(70)
+  note        String?
+  updatedById String   @map("updated_by_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  user    User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  updater User @relation("PerformanceUpdater", fields: [updatedById], references: [id], onDelete: Restrict)
+
+  @@index([updatedById])
+  @@map("member_performance")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  teamId      String?  @map("team_id")
+  createdById String   @map("created_by_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  team      Team?           @relation(fields: [teamId], references: [id], onDelete: SetNull)
   createdBy User            @relation("ProjectCreator", fields: [createdById], references: [id], onDelete: Restrict)
   members   ProjectMember[]
   tasks     Task[]
 
   @@index([createdById])
+  @@index([teamId])
   @@map("projects")
 }
 

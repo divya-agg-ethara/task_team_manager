@@ -15,6 +15,8 @@ import {
   weeklyFocusData,
 } from "@/components/dashboard/mock-data";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { surfaces } from "@/lib/ui/surfaces";
+import { cn } from "@/lib/utils";
 
 const tooltipStyle = {
   backgroundColor: "hsl(var(--popover))",
@@ -34,7 +36,7 @@ export function ProductivityOverview() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
       >
-        <Card className="relative h-full overflow-hidden border-border/50 bg-card/85 shadow-sm ring-1 ring-border/30 backdrop-blur-sm transition-[box-shadow,transform] duration-300 hover:-translate-y-px hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/35">
+        <Card className={cn("relative h-full", surfaces.card, surfaces.cardInteractive)}>
           <div className="pointer-events-none absolute right-8 top-0 h-28 w-[45%] bg-gradient-to-b from-primary/8 to-transparent" />
           <CardHeader className="relative pb-3">
             <div className="flex items-start justify-between gap-4">
@@ -161,8 +163,10 @@ function StatGlass({
     <div
       className={
         highlight
-          ? "group rounded-xl border border-primary/25 bg-gradient-to-br from-primary/10 via-transparent to-muted/40 p-4 shadow-sm ring-1 ring-primary/10 transition-[transform,box-shadow] duration-300 hover:-translate-y-px hover:shadow-md"
-          : "group rounded-xl border border-border/55 bg-muted/25 p-4 shadow-sm backdrop-blur-sm transition-[transform,box-shadow] duration-300 hover:-translate-y-px hover:border-border/90 hover:bg-muted/35 hover:shadow-md"
+          ? "group rounded-xl border border-primary/25 bg-gradient-to-br from-primary/10 via-transparent to-muted/40 p-4 shadow-[0_1px_0_0_hsl(var(--foreground)/0.03)_inset] ring-1 ring-primary/15 transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_28px_-10px_hsl(var(--primary)/0.2)]"
+          : cn(
+              "group rounded-xl border border-border/45 bg-gradient-to-br from-muted/30 to-muted/10 p-4 shadow-[0_1px_0_0_hsl(var(--foreground)/0.02)_inset] ring-1 ring-border/20 backdrop-blur-sm transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-border/60 hover:shadow-[0_8px_24px_-12px_hsl(var(--foreground)/0.08)]",
+            )
       }
     >
       <div className="flex items-start justify-between gap-3">

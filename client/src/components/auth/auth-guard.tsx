@@ -11,21 +11,23 @@ export function AuthGuard({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const accessToken = useAuthStore((s) => s.accessToken);
+  const userId = useAuthStore((s) => s.user?.id);
+  const hasSession = Boolean(accessToken && userId);
 
   useEffect(() => {
     if (!hydrated) return;
-    if (!accessToken) {
+    if (!hasSession) {
       const from =
         pathname && pathname !== "/login" ? `?from=${encodeURIComponent(pathname)}` : "";
       router.replace(`/login${from}`);
     }
-  }, [hydrated, accessToken, router, pathname]);
+  }, [hydrated, hasSession, router, pathname]);
 
   if (!hydrated) {
     return <AuthPageLoader label="Restoring your session…" />;
   }
 
-  if (!accessToken) {
+  if (!hasSession) {
     return <AuthPageLoader label="Redirecting to sign in…" />;
   }
 

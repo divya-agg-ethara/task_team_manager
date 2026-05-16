@@ -36,6 +36,18 @@ const config: Config = {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
+        brand: {
+          DEFAULT: "hsl(var(--brand))",
+          muted: "hsl(var(--brand-muted))",
+          glow: "hsl(var(--brand-glow))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        section: {
+          tint: "hsl(var(--section-tint))",
+        },
+        sidebar: {
+          tint: "hsl(var(--sidebar-tint))",
+        },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",

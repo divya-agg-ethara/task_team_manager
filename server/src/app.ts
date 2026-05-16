@@ -13,9 +13,27 @@ export function createApp() {
   app.set("trust proxy", 1);
 
   app.use(helmet());
+
+  const corsOrigins =
+    env.NODE_ENV === "development"
+      ? Array.from(
+          new Set([
+            env.CLIENT_URL,
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
+          ]),
+        )
+      : [env.CLIENT_URL];
+
   app.use(
     cors({
-      origin: env.CLIENT_URL,
+      origin(origin, callback) {
+        if (!origin || corsOrigins.includes(origin)) {
+          callback(null, true);
+          return;
+        }
+        callback(new Error(`Origin ${origin} not allowed by CORS`));
+      },
       credentials: true,
     }),
   );

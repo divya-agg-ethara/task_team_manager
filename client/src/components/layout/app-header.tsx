@@ -25,7 +25,7 @@ export function AppHeader() {
   const firstName = user?.name?.split(/\s+/)[0] ?? "there";
 
   return (
-    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-3 border-b border-border/50 bg-background/75 px-3 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/60 sm:gap-4 sm:px-5">
+    <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-3 border-b border-border/40 bg-background/80 px-3 shadow-[0_1px_0_0_hsl(var(--foreground)/0.03),0_8px_32px_-12px_hsl(var(--foreground)/0.06)] backdrop-blur-2xl supports-[backdrop-filter]:bg-background/65 sm:gap-4 sm:px-5">
       {isMobile ? (
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetTrigger asChild>
@@ -77,7 +77,7 @@ export function AppHeader() {
           aria-label="Search (coming soon)"
         >
           <Search className="size-4 shrink-0 opacity-60 transition-opacity group-hover:opacity-80" />
-          <span className="flex-1 truncate text-[13px]">Search workspace…</span>
+          <span className="flex-1 truncate text-sm">Search workspace…</span>
           <kbd className="pointer-events-none hidden h-5 select-none items-center gap-0.5 rounded-md border border-border/60 bg-background/80 px-1.5 font-mono text-[10px] font-medium text-muted-foreground shadow-sm sm:inline-flex">
             ⌘K
           </kbd>
@@ -86,10 +86,10 @@ export function AppHeader() {
 
       <div className="min-w-0 flex-1 sm:hidden">
         <div className="flex flex-col">
-          <span className="text-sm font-semibold tracking-tight text-foreground">
+          <span className="text-base font-semibold tracking-tight text-foreground">
             Overview
           </span>
-          <span className="truncate text-[11px] text-muted-foreground">
+          <span className="truncate text-sm text-muted-foreground">
             Hey {firstName} — stay in flow
           </span>
         </div>

@@ -1,9 +1,10 @@
 import type { ProjectRole } from "../config/constants";
-import type { PublicUser } from "./user";
+import type { PublicUser, WorkspaceRole } from "./user";
 
 export interface JwtPayload {
   sub: string;
   email: string;
+  role: WorkspaceRole;
 }
 
 export interface ProjectMembershipContext {

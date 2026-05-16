@@ -5,7 +5,9 @@ import { ArrowUpRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { surfaces, typography } from "@/lib/ui/surfaces";
 import { useAuthStore } from "@/stores/auth-store";
+import { cn } from "@/lib/utils";
 
 export function WelcomeBanner() {
   const user = useAuthStore((s) => s.user);
@@ -16,7 +18,7 @@ export function WelcomeBanner() {
 
   return (
     <motion.section
-      className="relative overflow-hidden rounded-2xl border border-border/50 bg-gradient-to-br from-card/95 via-card/80 to-muted/40 shadow-[0_1px_0_0_rgb(255_255_255/0.04)_inset,0_8px_32px_-8px_rgb(0_0_0/0.08)] backdrop-blur-sm dark:from-card/70 dark:to-muted/25 dark:shadow-[0_1px_0_0_rgb(255_255_255/0.06)_inset,0_12px_48px_-12px_rgb(0_0_0/0.45)]"
+      className={cn(surfaces.hero)}
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
@@ -31,19 +33,19 @@ export function WelcomeBanner() {
         <div className="max-w-xl space-y-4">
           <Badge
             variant="secondary"
-            className="w-fit gap-1.5 border border-border/60 bg-background/50 px-2.5 py-1 text-[11px] font-medium tracking-wide text-muted-foreground backdrop-blur-md"
+            className="w-fit gap-1.5 border border-border/60 bg-background/50 px-2.5 py-1 text-sm font-medium tracking-wide text-muted-foreground backdrop-blur-md"
           >
             <Sparkles className="size-3 text-primary" aria-hidden />
             Overview
           </Badge>
           <div className="space-y-2">
-            <h1 className="text-balance text-3xl font-semibold tracking-tight text-foreground sm:text-[2rem] sm:leading-tight">
+            <h1 className={cn("text-balance", typography.pageTitle)}>
               {greeting},{" "}
               <span className="bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
                 {firstName}
               </span>
             </h1>
-            <p className="text-pretty text-[15px] leading-relaxed text-muted-foreground sm:text-base">
+            <p className={cn("text-pretty", typography.body)}>
               Here&apos;s how your workspace is shaping up. Metrics are sample
               data until tasks and analytics sync—layout is ready when you plug
               in APIs.
@@ -63,12 +65,12 @@ export function WelcomeBanner() {
             </Link>
           </Button>
           <Button
+            asChild
             variant="outline"
             size="sm"
-            disabled
-            className="h-9 border-dashed text-muted-foreground"
+            className="h-9 border-border/60 bg-background/50 shadow-sm backdrop-blur-sm transition-[box-shadow,transform] hover:bg-background/80 active:scale-[0.98]"
           >
-            New project · soon
+            <Link href="/projects?create=1">New project</Link>
           </Button>
         </div>
       </div>

@@ -1,31 +1,41 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { waitForAuthRehydration } from "@/lib/auth/persist-lifecycle";
+import { useAuthStore } from "@/stores/auth-store";
 
-const HYDRATION_FALLBACK_MS = 5000;
+const HYDRATION_FALLBACK_MS = 2500;
+
+function readHasHydrated(): boolean {
+  if (typeof window === "undefined") return false;
+  return useAuthStore.persist?.hasHydrated() ?? false;
+}
 
 /**
  * Returns true after Zustand persist has finished rehydrating on the client.
+ * Rehydration is started by {@link AuthRehydration} in AppProviders.
  */
 export function useAuthHydrated(): boolean {
-  const [hydrated, setHydrated] = useState(false);
+  const [hydrated, setHydrated] = useState(readHasHydrated);
 
   useEffect(() => {
-    let cancelled = false;
+    const api = useAuthStore.persist;
 
-    const timer = window.setTimeout(() => {
-      if (!cancelled) setHydrated(true);
-    }, HYDRATION_FALLBACK_MS);
+    if (!api) {
+      setHydrated(true);
+      return;
+    }
 
-    void waitForAuthRehydration().finally(() => {
-      if (!cancelled) setHydrated(true);
-      window.clearTimeout(timer);
-    });
+    if (api.hasHydrated()) {
+      setHydrated(true);
+      return;
+    }
+
+    const unsub = api.onFinishHydration(() => setHydrated(true));
+    const fallback = window.setTimeout(() => setHydrated(true), HYDRATION_FALLBACK_MS);
 
     return () => {
-      cancelled = true;
-      window.clearTimeout(timer);
+      unsub();
+      window.clearTimeout(fallback);
     };
   }, []);
 

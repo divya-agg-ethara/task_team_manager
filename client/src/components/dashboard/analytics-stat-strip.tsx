@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import { dashboardKpiStats } from "@/components/dashboard/mock-data";
+import { surfaces } from "@/lib/ui/surfaces";
 import { cn } from "@/lib/utils";
 
 export function AnalyticsStatStrip() {
@@ -30,10 +31,14 @@ export function AnalyticsStatStrip() {
             },
           }}
           whileHover={{
-            y: -2,
-            transition: { duration: 0.22, ease: [0.22, 1, 0.36, 1] },
+            y: -3,
+            transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] },
           }}
-          className="group relative overflow-hidden rounded-xl border border-border/50 bg-gradient-to-br from-card/95 via-card/80 to-muted/25 p-4 shadow-sm ring-1 ring-border/20 backdrop-blur-sm transition-[box-shadow,border-color] duration-300 hover:border-border/70 hover:shadow-md hover:shadow-black/[0.04] dark:hover:shadow-black/30"
+          className={cn(
+            "group relative overflow-hidden p-4",
+            surfaces.card,
+            surfaces.cardInteractive,
+          )}
         >
           <div
             className="pointer-events-none absolute -right-6 -top-8 h-24 w-24 rounded-full bg-primary/[0.07] blur-2xl transition-opacity duration-300 group-hover:opacity-90"

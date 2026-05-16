@@ -9,6 +9,7 @@ export interface AuthState {
   accessToken: string | null;
   user: AuthUser | null;
   setSession: (payload: { accessToken: string; user: AuthUser }) => void;
+  updateUser: (user: AuthUser) => void;
   clearSession: () => void;
 }
 
@@ -19,6 +20,8 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       setSession: ({ accessToken, user }) =>
         set({ accessToken, user }),
+      updateUser: (user) =>
+        set((s) => (s.accessToken ? { user } : { user: null })),
       clearSession: () => set({ accessToken: null, user: null }),
     }),
     {
@@ -41,7 +44,20 @@ export const useAuthStore = create<AuthState>()(
         ) {
           return current;
         }
-        return { ...current, accessToken: p.accessToken, user: p.user };
+        const role =
+          p.user.role === "ADMIN" || p.user.role === "MEMBER"
+            ? p.user.role
+            : "MEMBER";
+        return {
+          ...current,
+          accessToken: p.accessToken,
+          user: { ...p.user, role },
+        };
+      },
+      onRehydrateStorage: () => (_state, error) => {
+        if (error) {
+          console.warn("[auth] Failed to restore session from storage", error);
+        }
       },
       /**
        * Next.js: avoid hydrating from localStorage during SSR.

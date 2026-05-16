@@ -2,9 +2,11 @@
 
 import { type ReactNode } from "react";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 import { AppHeader } from "@/components/layout/app-header";
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { SidebarProvider, useSidebar } from "@/components/layout/sidebar-context";
+import { layout } from "@/lib/ui/surfaces";
 
 function DashboardShellInner({ children }: { children: ReactNode }) {
   const { collapsed } = useSidebar();
@@ -12,11 +14,15 @@ function DashboardShellInner({ children }: { children: ReactNode }) {
   return (
     <div className="relative flex min-h-0 min-h-screen w-full flex-1 overflow-hidden bg-background">
       <div
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,hsl(var(--primary)/0.08),transparent_55%)]"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_90%_55%_at_50%_-15%,hsl(var(--primary)/0.09),transparent_58%)]"
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,hsl(var(--muted)/0.35)_0%,transparent_32%)]"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_40%_at_100%_0%,hsl(var(--chart-1)/0.04),transparent_50%)]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,hsl(var(--muted)/0.4)_0%,transparent_28%)]"
         aria-hidden
       />
       <AppSidebar collapsed={collapsed} />
@@ -28,7 +34,7 @@ function DashboardShellInner({ children }: { children: ReactNode }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="mx-auto w-full max-w-[1400px] px-4 py-6 sm:px-6 sm:py-8">
+          <div className={cn(layout.contentMax, layout.contentPadding)}>
             {children}
           </div>
         </motion.main>
