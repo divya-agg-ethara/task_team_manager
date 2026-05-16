@@ -1,4 +1,7 @@
 export type * from './models/User';
+export type * from './models/Team';
+export type * from './models/TeamMember';
+export type * from './models/MemberPerformance';
 export type * from './models/Project';
 export type * from './models/ProjectMember';
 export type * from './models/Task';

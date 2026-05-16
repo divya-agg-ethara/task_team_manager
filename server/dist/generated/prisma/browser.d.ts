@@ -8,6 +8,21 @@ export * from './enums';
  */
 export type User = Prisma.UserModel;
 /**
+ * Model Team
+ *
+ */
+export type Team = Prisma.TeamModel;
+/**
+ * Model TeamMember
+ *
+ */
+export type TeamMember = Prisma.TeamMemberModel;
+/**
+ * Model MemberPerformance
+ *
+ */
+export type MemberPerformance = Prisma.MemberPerformanceModel;
+/**
  * Model Project
  *
  */

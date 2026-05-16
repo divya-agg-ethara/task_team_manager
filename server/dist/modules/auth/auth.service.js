@@ -14,6 +14,7 @@ function toPublicUser(user) {
         id: user.id,
         email: user.email,
         name: user.name,
+        role: user.role,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
     };
@@ -23,6 +24,7 @@ function buildAuthResponse(user) {
     const accessToken = (0, jwt_1.signAccessToken)({
         sub: user.id,
         email: user.email,
+        role: publicUser.role,
     });
     return {
         user: publicUser,
@@ -38,11 +40,14 @@ class AuthService {
             throw utils_1.ApiError.conflict("An account with this email already exists");
         }
         const hashedPassword = await bcryptjs_1.default.hash(input.password, config_1.BCRYPT_SALT_ROUNDS);
+        const userCount = await client_1.prisma.user.count();
+        const role = userCount === 0 ? "ADMIN" : "MEMBER";
         const user = await client_1.prisma.user.create({
             data: {
                 email: input.email,
                 password: hashedPassword,
                 name: input.name,
+                role,
             },
         });
         return buildAuthResponse(user);
@@ -66,6 +71,28 @@ class AuthService {
             return null;
         }
         return toPublicUser(user);
+    }
+    async updateProfile(userId, input) {
+        const user = await client_1.prisma.user.update({
+            where: { id: userId },
+            data: { name: input.name },
+        });
+        return toPublicUser(user);
+    }
+    async changePassword(userId, input) {
+        const user = await client_1.prisma.user.findUnique({ where: { id: userId } });
+        if (!user) {
+            throw utils_1.ApiError.unauthorized();
+        }
+        const valid = await bcryptjs_1.default.compare(input.currentPassword, user.password);
+        if (!valid) {
+            throw utils_1.ApiError.unauthorized("Current password is incorrect");
+        }
+        const hashedPassword = await bcryptjs_1.default.hash(input.newPassword, config_1.BCRYPT_SALT_ROUNDS);
+        await client_1.prisma.user.update({
+            where: { id: userId },
+            data: { password: hashedPassword },
+        });
     }
 }
 exports.AuthService = AuthService;

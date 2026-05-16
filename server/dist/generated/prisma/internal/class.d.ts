@@ -129,6 +129,39 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
         omit: OmitOpts;
     }>;
     /**
+     * `prisma.team`: Exposes CRUD operations for the **Team** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Teams
+      * const teams = await prisma.team.findMany()
+      * ```
+      */
+    get team(): Prisma.TeamDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.teamMember`: Exposes CRUD operations for the **TeamMember** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more TeamMembers
+      * const teamMembers = await prisma.teamMember.findMany()
+      * ```
+      */
+    get teamMember(): Prisma.TeamMemberDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.memberPerformance`: Exposes CRUD operations for the **MemberPerformance** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more MemberPerformances
+      * const memberPerformances = await prisma.memberPerformance.findMany()
+      * ```
+      */
+    get memberPerformance(): Prisma.MemberPerformanceDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
      * `prisma.project`: Exposes CRUD operations for the **Project** model.
       * Example usage:
       * ```ts

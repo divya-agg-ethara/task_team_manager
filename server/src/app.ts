@@ -3,9 +3,9 @@ import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-import { env } from "./config";
+import { env, getCorsOrigins, API_PREFIX } from "./config";
 import { errorHandler, notFoundHandler } from "./middleware";
-import { apiRouter, API_PREFIX } from "./routes";
+import { apiRouter } from "./routes";
 
 export function createApp() {
   const app = express();
@@ -14,16 +14,7 @@ export function createApp() {
 
   app.use(helmet());
 
-  const corsOrigins =
-    env.NODE_ENV === "development"
-      ? Array.from(
-          new Set([
-            env.CLIENT_URL,
-            "http://localhost:3000",
-            "http://127.0.0.1:3000",
-          ]),
-        )
-      : [env.CLIENT_URL];
+  const corsOrigins = getCorsOrigins();
 
   app.use(
     cors({

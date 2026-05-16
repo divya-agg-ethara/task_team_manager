@@ -7,8 +7,9 @@ const client_1 = require("./prisma/client");
 async function bootstrap() {
     await (0, client_1.connectDatabase)();
     const app = (0, app_1.createApp)();
-    const server = app.listen(config_1.env.PORT, () => {
-        console.log(`[server] ${config_1.env.NODE_ENV} — listening on http://localhost:${config_1.env.PORT}`);
+    const host = "0.0.0.0";
+    const server = app.listen(config_1.env.PORT, host, () => {
+        console.log(`[server] ${config_1.env.NODE_ENV} — listening on ${host}:${config_1.env.PORT} (API ${config_1.API_PREFIX})`);
     });
     const shutdown = async (signal) => {
         console.log(`[server] ${signal} received — shutting down`);

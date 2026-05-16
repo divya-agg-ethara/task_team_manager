@@ -9,7 +9,15 @@
 * 🟢 You can import this file directly.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TaskPriority = exports.TaskStatus = exports.ProjectRole = void 0;
+exports.TaskPriority = exports.TaskStatus = exports.ProjectRole = exports.TeamMemberRole = exports.WorkspaceRole = void 0;
+exports.WorkspaceRole = {
+    ADMIN: 'ADMIN',
+    MEMBER: 'MEMBER'
+};
+exports.TeamMemberRole = {
+    ADMIN: 'ADMIN',
+    MEMBER: 'MEMBER'
+};
 exports.ProjectRole = {
     ADMIN: 'ADMIN',
     MEMBER: 'MEMBER'

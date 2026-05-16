@@ -10,6 +10,7 @@ declare const envSchema: z.ZodObject<{
     JWT_SECRET: z.ZodString;
     JWT_EXPIRES_IN: z.ZodDefault<z.ZodString>;
     CLIENT_URL: z.ZodDefault<z.ZodString>;
+    ALLOWED_ORIGINS: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type Env = z.infer<typeof envSchema>;
 export declare const env: {
@@ -19,6 +20,9 @@ export declare const env: {
     JWT_SECRET: string;
     JWT_EXPIRES_IN: string;
     CLIENT_URL: string;
+    ALLOWED_ORIGINS?: string | undefined;
 };
+/** Resolved CORS allowlist for the current environment */
+export declare function getCorsOrigins(): string[];
 export {};
 //# sourceMappingURL=env.d.ts.map

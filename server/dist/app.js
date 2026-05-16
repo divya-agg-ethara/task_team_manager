@@ -16,8 +16,15 @@ function createApp() {
     const app = (0, express_1.default)();
     app.set("trust proxy", 1);
     app.use((0, helmet_1.default)());
+    const corsOrigins = (0, config_1.getCorsOrigins)();
     app.use((0, cors_1.default)({
-        origin: config_1.env.CLIENT_URL,
+        origin(origin, callback) {
+            if (!origin || corsOrigins.includes(origin)) {
+                callback(null, true);
+                return;
+            }
+            callback(new Error(`Origin ${origin} not allowed by CORS`));
+        },
         credentials: true,
     }));
     app.use((0, compression_1.default)());
@@ -29,7 +36,7 @@ function createApp() {
     else {
         app.use((0, morgan_1.default)("combined"));
     }
-    app.use(routes_1.API_PREFIX, routes_1.apiRouter);
+    app.use(config_1.API_PREFIX, routes_1.apiRouter);
     app.use(middleware_1.notFoundHandler);
     app.use(middleware_1.errorHandler);
     return app;

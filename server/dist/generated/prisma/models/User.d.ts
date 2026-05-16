@@ -1,4 +1,5 @@
 import type * as runtime from "@prisma/client/runtime/client";
+import type * as $Enums from "../enums";
 import type * as Prisma from "../internal/prismaNamespace";
 /**
  * Model User
@@ -15,6 +16,7 @@ export type UserMinAggregateOutputType = {
     email: string | null;
     password: string | null;
     name: string | null;
+    role: $Enums.WorkspaceRole | null;
     createdAt: Date | null;
     updatedAt: Date | null;
 };
@@ -23,6 +25,7 @@ export type UserMaxAggregateOutputType = {
     email: string | null;
     password: string | null;
     name: string | null;
+    role: $Enums.WorkspaceRole | null;
     createdAt: Date | null;
     updatedAt: Date | null;
 };
@@ -31,6 +34,7 @@ export type UserCountAggregateOutputType = {
     email: number;
     password: number;
     name: number;
+    role: number;
     createdAt: number;
     updatedAt: number;
     _all: number;
@@ -40,6 +44,7 @@ export type UserMinAggregateInputType = {
     email?: true;
     password?: true;
     name?: true;
+    role?: true;
     createdAt?: true;
     updatedAt?: true;
 };
@@ -48,6 +53,7 @@ export type UserMaxAggregateInputType = {
     email?: true;
     password?: true;
     name?: true;
+    role?: true;
     createdAt?: true;
     updatedAt?: true;
 };
@@ -56,6 +62,7 @@ export type UserCountAggregateInputType = {
     email?: true;
     password?: true;
     name?: true;
+    role?: true;
     createdAt?: true;
     updatedAt?: true;
     _all?: true;
@@ -127,6 +134,7 @@ export type UserGroupByOutputType = {
     email: string;
     password: string;
     name: string;
+    role: $Enums.WorkspaceRole;
     createdAt: Date;
     updatedAt: Date;
     _count: UserCountAggregateOutputType | null;
@@ -144,24 +152,34 @@ export type UserWhereInput = {
     email?: Prisma.StringFilter<"User"> | string;
     password?: Prisma.StringFilter<"User"> | string;
     name?: Prisma.StringFilter<"User"> | string;
+    role?: Prisma.EnumWorkspaceRoleFilter<"User"> | $Enums.WorkspaceRole;
     createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     projectMembers?: Prisma.ProjectMemberListRelationFilter;
+    teamMembers?: Prisma.TeamMemberListRelationFilter;
     createdProjects?: Prisma.ProjectListRelationFilter;
+    createdTeams?: Prisma.TeamListRelationFilter;
     createdTasks?: Prisma.TaskListRelationFilter;
     assignedTasks?: Prisma.TaskListRelationFilter;
+    performance?: Prisma.XOR<Prisma.MemberPerformanceNullableScalarRelationFilter, Prisma.MemberPerformanceWhereInput> | null;
+    performanceUpdates?: Prisma.MemberPerformanceListRelationFilter;
 };
 export type UserOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
     password?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    role?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     projectMembers?: Prisma.ProjectMemberOrderByRelationAggregateInput;
+    teamMembers?: Prisma.TeamMemberOrderByRelationAggregateInput;
     createdProjects?: Prisma.ProjectOrderByRelationAggregateInput;
+    createdTeams?: Prisma.TeamOrderByRelationAggregateInput;
     createdTasks?: Prisma.TaskOrderByRelationAggregateInput;
     assignedTasks?: Prisma.TaskOrderByRelationAggregateInput;
+    performance?: Prisma.MemberPerformanceOrderByWithRelationInput;
+    performanceUpdates?: Prisma.MemberPerformanceOrderByRelationAggregateInput;
 };
 export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string;
@@ -171,18 +189,24 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
     NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[];
     password?: Prisma.StringFilter<"User"> | string;
     name?: Prisma.StringFilter<"User"> | string;
+    role?: Prisma.EnumWorkspaceRoleFilter<"User"> | $Enums.WorkspaceRole;
     createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     projectMembers?: Prisma.ProjectMemberListRelationFilter;
+    teamMembers?: Prisma.TeamMemberListRelationFilter;
     createdProjects?: Prisma.ProjectListRelationFilter;
+    createdTeams?: Prisma.TeamListRelationFilter;
     createdTasks?: Prisma.TaskListRelationFilter;
     assignedTasks?: Prisma.TaskListRelationFilter;
+    performance?: Prisma.XOR<Prisma.MemberPerformanceNullableScalarRelationFilter, Prisma.MemberPerformanceWhereInput> | null;
+    performanceUpdates?: Prisma.MemberPerformanceListRelationFilter;
 }, "id" | "email">;
 export type UserOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
     password?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    role?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     _count?: Prisma.UserCountOrderByAggregateInput;
@@ -197,6 +221,7 @@ export type UserScalarWhereWithAggregatesInput = {
     email?: Prisma.StringWithAggregatesFilter<"User"> | string;
     password?: Prisma.StringWithAggregatesFilter<"User"> | string;
     name?: Prisma.StringWithAggregatesFilter<"User"> | string;
+    role?: Prisma.EnumWorkspaceRoleWithAggregatesFilter<"User"> | $Enums.WorkspaceRole;
     createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string;
 };
@@ -205,54 +230,75 @@ export type UserCreateInput = {
     email: string;
     password: string;
     name: string;
+    role?: $Enums.WorkspaceRole;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     projectMembers?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput;
+    teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput;
     createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
+    createdTeams?: Prisma.TeamCreateNestedManyWithoutCreatedByInput;
     createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
     assignedTasks?: Prisma.TaskCreateNestedManyWithoutAssignedToInput;
+    performance?: Prisma.MemberPerformanceCreateNestedOneWithoutUserInput;
+    performanceUpdates?: Prisma.MemberPerformanceCreateNestedManyWithoutUpdaterInput;
 };
 export type UserUncheckedCreateInput = {
     id?: string;
     email: string;
     password: string;
     name: string;
+    role?: $Enums.WorkspaceRole;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     projectMembers?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
+    teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput;
     createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    createdTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutCreatedByInput;
     createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
     assignedTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutAssignedToInput;
+    performance?: Prisma.MemberPerformanceUncheckedCreateNestedOneWithoutUserInput;
+    performanceUpdates?: Prisma.MemberPerformanceUncheckedCreateNestedManyWithoutUpdaterInput;
 };
 export type UserUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.StringFieldUpdateOperationsInput | string;
     password?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     projectMembers?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput;
+    teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput;
     createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
+    createdTeams?: Prisma.TeamUpdateManyWithoutCreatedByNestedInput;
     createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
     assignedTasks?: Prisma.TaskUpdateManyWithoutAssignedToNestedInput;
+    performance?: Prisma.MemberPerformanceUpdateOneWithoutUserNestedInput;
+    performanceUpdates?: Prisma.MemberPerformanceUpdateManyWithoutUpdaterNestedInput;
 };
 export type UserUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.StringFieldUpdateOperationsInput | string;
     password?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     projectMembers?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
+    teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput;
     createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    createdTeams?: Prisma.TeamUncheckedUpdateManyWithoutCreatedByNestedInput;
     createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
     assignedTasks?: Prisma.TaskUncheckedUpdateManyWithoutAssignedToNestedInput;
+    performance?: Prisma.MemberPerformanceUncheckedUpdateOneWithoutUserNestedInput;
+    performanceUpdates?: Prisma.MemberPerformanceUncheckedUpdateManyWithoutUpdaterNestedInput;
 };
 export type UserCreateManyInput = {
     id?: string;
     email: string;
     password: string;
     name: string;
+    role?: $Enums.WorkspaceRole;
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
@@ -261,6 +307,7 @@ export type UserUpdateManyMutationInput = {
     email?: Prisma.StringFieldUpdateOperationsInput | string;
     password?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -269,6 +316,7 @@ export type UserUncheckedUpdateManyInput = {
     email?: Prisma.StringFieldUpdateOperationsInput | string;
     password?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -277,6 +325,7 @@ export type UserCountOrderByAggregateInput = {
     email?: Prisma.SortOrder;
     password?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    role?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -285,6 +334,7 @@ export type UserMaxOrderByAggregateInput = {
     email?: Prisma.SortOrder;
     password?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    role?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -293,6 +343,7 @@ export type UserMinOrderByAggregateInput = {
     email?: Prisma.SortOrder;
     password?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    role?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -307,8 +358,59 @@ export type UserNullableScalarRelationFilter = {
 export type StringFieldUpdateOperationsInput = {
     set?: string;
 };
+export type EnumWorkspaceRoleFieldUpdateOperationsInput = {
+    set?: $Enums.WorkspaceRole;
+};
 export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string;
+};
+export type UserCreateNestedOneWithoutCreatedTeamsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedTeamsInput, Prisma.UserUncheckedCreateWithoutCreatedTeamsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedTeamsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutCreatedTeamsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedTeamsInput, Prisma.UserUncheckedCreateWithoutCreatedTeamsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedTeamsInput;
+    upsert?: Prisma.UserUpsertWithoutCreatedTeamsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedTeamsInput, Prisma.UserUpdateWithoutCreatedTeamsInput>, Prisma.UserUncheckedUpdateWithoutCreatedTeamsInput>;
+};
+export type UserCreateNestedOneWithoutTeamMembersInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutTeamMembersInput, Prisma.UserUncheckedCreateWithoutTeamMembersInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutTeamMembersInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutTeamMembersNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutTeamMembersInput, Prisma.UserUncheckedCreateWithoutTeamMembersInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutTeamMembersInput;
+    upsert?: Prisma.UserUpsertWithoutTeamMembersInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTeamMembersInput, Prisma.UserUpdateWithoutTeamMembersInput>, Prisma.UserUncheckedUpdateWithoutTeamMembersInput>;
+};
+export type UserCreateNestedOneWithoutPerformanceInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutPerformanceInput, Prisma.UserUncheckedCreateWithoutPerformanceInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutPerformanceInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserCreateNestedOneWithoutPerformanceUpdatesInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutPerformanceUpdatesInput, Prisma.UserUncheckedCreateWithoutPerformanceUpdatesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutPerformanceUpdatesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutPerformanceNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutPerformanceInput, Prisma.UserUncheckedCreateWithoutPerformanceInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutPerformanceInput;
+    upsert?: Prisma.UserUpsertWithoutPerformanceInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPerformanceInput, Prisma.UserUpdateWithoutPerformanceInput>, Prisma.UserUncheckedUpdateWithoutPerformanceInput>;
+};
+export type UserUpdateOneRequiredWithoutPerformanceUpdatesNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutPerformanceUpdatesInput, Prisma.UserUncheckedCreateWithoutPerformanceUpdatesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutPerformanceUpdatesInput;
+    upsert?: Prisma.UserUpsertWithoutPerformanceUpdatesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPerformanceUpdatesInput, Prisma.UserUpdateWithoutPerformanceUpdatesInput>, Prisma.UserUncheckedUpdateWithoutPerformanceUpdatesInput>;
 };
 export type UserCreateNestedOneWithoutCreatedProjectsInput = {
     create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedProjectsInput, Prisma.UserUncheckedCreateWithoutCreatedProjectsInput>;
@@ -360,27 +462,345 @@ export type UserUpdateOneWithoutAssignedTasksNestedInput = {
     connect?: Prisma.UserWhereUniqueInput;
     update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssignedTasksInput, Prisma.UserUpdateWithoutAssignedTasksInput>, Prisma.UserUncheckedUpdateWithoutAssignedTasksInput>;
 };
+export type UserCreateWithoutCreatedTeamsInput = {
+    id?: string;
+    email: string;
+    password: string;
+    name: string;
+    role?: $Enums.WorkspaceRole;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    projectMembers?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput;
+    teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput;
+    createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
+    createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
+    assignedTasks?: Prisma.TaskCreateNestedManyWithoutAssignedToInput;
+    performance?: Prisma.MemberPerformanceCreateNestedOneWithoutUserInput;
+    performanceUpdates?: Prisma.MemberPerformanceCreateNestedManyWithoutUpdaterInput;
+};
+export type UserUncheckedCreateWithoutCreatedTeamsInput = {
+    id?: string;
+    email: string;
+    password: string;
+    name: string;
+    role?: $Enums.WorkspaceRole;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    projectMembers?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
+    teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput;
+    createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
+    assignedTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutAssignedToInput;
+    performance?: Prisma.MemberPerformanceUncheckedCreateNestedOneWithoutUserInput;
+    performanceUpdates?: Prisma.MemberPerformanceUncheckedCreateNestedManyWithoutUpdaterInput;
+};
+export type UserCreateOrConnectWithoutCreatedTeamsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutCreatedTeamsInput, Prisma.UserUncheckedCreateWithoutCreatedTeamsInput>;
+};
+export type UserUpsertWithoutCreatedTeamsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutCreatedTeamsInput, Prisma.UserUncheckedUpdateWithoutCreatedTeamsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutCreatedTeamsInput, Prisma.UserUncheckedCreateWithoutCreatedTeamsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutCreatedTeamsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutCreatedTeamsInput, Prisma.UserUncheckedUpdateWithoutCreatedTeamsInput>;
+};
+export type UserUpdateWithoutCreatedTeamsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    projectMembers?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput;
+    teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput;
+    createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
+    createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
+    assignedTasks?: Prisma.TaskUpdateManyWithoutAssignedToNestedInput;
+    performance?: Prisma.MemberPerformanceUpdateOneWithoutUserNestedInput;
+    performanceUpdates?: Prisma.MemberPerformanceUpdateManyWithoutUpdaterNestedInput;
+};
+export type UserUncheckedUpdateWithoutCreatedTeamsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    projectMembers?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
+    teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput;
+    createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
+    assignedTasks?: Prisma.TaskUncheckedUpdateManyWithoutAssignedToNestedInput;
+    performance?: Prisma.MemberPerformanceUncheckedUpdateOneWithoutUserNestedInput;
+    performanceUpdates?: Prisma.MemberPerformanceUncheckedUpdateManyWithoutUpdaterNestedInput;
+};
+export type UserCreateWithoutTeamMembersInput = {
+    id?: string;
+    email: string;
+    password: string;
+    name: string;
+    role?: $Enums.WorkspaceRole;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    projectMembers?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput;
+    createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
+    createdTeams?: Prisma.TeamCreateNestedManyWithoutCreatedByInput;
+    createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
+    assignedTasks?: Prisma.TaskCreateNestedManyWithoutAssignedToInput;
+    performance?: Prisma.MemberPerformanceCreateNestedOneWithoutUserInput;
+    performanceUpdates?: Prisma.MemberPerformanceCreateNestedManyWithoutUpdaterInput;
+};
+export type UserUncheckedCreateWithoutTeamMembersInput = {
+    id?: string;
+    email: string;
+    password: string;
+    name: string;
+    role?: $Enums.WorkspaceRole;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    projectMembers?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
+    createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    createdTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutCreatedByInput;
+    createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
+    assignedTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutAssignedToInput;
+    performance?: Prisma.MemberPerformanceUncheckedCreateNestedOneWithoutUserInput;
+    performanceUpdates?: Prisma.MemberPerformanceUncheckedCreateNestedManyWithoutUpdaterInput;
+};
+export type UserCreateOrConnectWithoutTeamMembersInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutTeamMembersInput, Prisma.UserUncheckedCreateWithoutTeamMembersInput>;
+};
+export type UserUpsertWithoutTeamMembersInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutTeamMembersInput, Prisma.UserUncheckedUpdateWithoutTeamMembersInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutTeamMembersInput, Prisma.UserUncheckedCreateWithoutTeamMembersInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutTeamMembersInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutTeamMembersInput, Prisma.UserUncheckedUpdateWithoutTeamMembersInput>;
+};
+export type UserUpdateWithoutTeamMembersInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    projectMembers?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput;
+    createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
+    createdTeams?: Prisma.TeamUpdateManyWithoutCreatedByNestedInput;
+    createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
+    assignedTasks?: Prisma.TaskUpdateManyWithoutAssignedToNestedInput;
+    performance?: Prisma.MemberPerformanceUpdateOneWithoutUserNestedInput;
+    performanceUpdates?: Prisma.MemberPerformanceUpdateManyWithoutUpdaterNestedInput;
+};
+export type UserUncheckedUpdateWithoutTeamMembersInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    projectMembers?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
+    createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    createdTeams?: Prisma.TeamUncheckedUpdateManyWithoutCreatedByNestedInput;
+    createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
+    assignedTasks?: Prisma.TaskUncheckedUpdateManyWithoutAssignedToNestedInput;
+    performance?: Prisma.MemberPerformanceUncheckedUpdateOneWithoutUserNestedInput;
+    performanceUpdates?: Prisma.MemberPerformanceUncheckedUpdateManyWithoutUpdaterNestedInput;
+};
+export type UserCreateWithoutPerformanceInput = {
+    id?: string;
+    email: string;
+    password: string;
+    name: string;
+    role?: $Enums.WorkspaceRole;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    projectMembers?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput;
+    teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput;
+    createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
+    createdTeams?: Prisma.TeamCreateNestedManyWithoutCreatedByInput;
+    createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
+    assignedTasks?: Prisma.TaskCreateNestedManyWithoutAssignedToInput;
+    performanceUpdates?: Prisma.MemberPerformanceCreateNestedManyWithoutUpdaterInput;
+};
+export type UserUncheckedCreateWithoutPerformanceInput = {
+    id?: string;
+    email: string;
+    password: string;
+    name: string;
+    role?: $Enums.WorkspaceRole;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    projectMembers?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
+    teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput;
+    createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    createdTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutCreatedByInput;
+    createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
+    assignedTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutAssignedToInput;
+    performanceUpdates?: Prisma.MemberPerformanceUncheckedCreateNestedManyWithoutUpdaterInput;
+};
+export type UserCreateOrConnectWithoutPerformanceInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutPerformanceInput, Prisma.UserUncheckedCreateWithoutPerformanceInput>;
+};
+export type UserCreateWithoutPerformanceUpdatesInput = {
+    id?: string;
+    email: string;
+    password: string;
+    name: string;
+    role?: $Enums.WorkspaceRole;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    projectMembers?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput;
+    teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput;
+    createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
+    createdTeams?: Prisma.TeamCreateNestedManyWithoutCreatedByInput;
+    createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
+    assignedTasks?: Prisma.TaskCreateNestedManyWithoutAssignedToInput;
+    performance?: Prisma.MemberPerformanceCreateNestedOneWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutPerformanceUpdatesInput = {
+    id?: string;
+    email: string;
+    password: string;
+    name: string;
+    role?: $Enums.WorkspaceRole;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    projectMembers?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
+    teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput;
+    createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    createdTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutCreatedByInput;
+    createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
+    assignedTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutAssignedToInput;
+    performance?: Prisma.MemberPerformanceUncheckedCreateNestedOneWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutPerformanceUpdatesInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutPerformanceUpdatesInput, Prisma.UserUncheckedCreateWithoutPerformanceUpdatesInput>;
+};
+export type UserUpsertWithoutPerformanceInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutPerformanceInput, Prisma.UserUncheckedUpdateWithoutPerformanceInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutPerformanceInput, Prisma.UserUncheckedCreateWithoutPerformanceInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutPerformanceInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutPerformanceInput, Prisma.UserUncheckedUpdateWithoutPerformanceInput>;
+};
+export type UserUpdateWithoutPerformanceInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    projectMembers?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput;
+    teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput;
+    createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
+    createdTeams?: Prisma.TeamUpdateManyWithoutCreatedByNestedInput;
+    createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
+    assignedTasks?: Prisma.TaskUpdateManyWithoutAssignedToNestedInput;
+    performanceUpdates?: Prisma.MemberPerformanceUpdateManyWithoutUpdaterNestedInput;
+};
+export type UserUncheckedUpdateWithoutPerformanceInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    projectMembers?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
+    teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput;
+    createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    createdTeams?: Prisma.TeamUncheckedUpdateManyWithoutCreatedByNestedInput;
+    createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
+    assignedTasks?: Prisma.TaskUncheckedUpdateManyWithoutAssignedToNestedInput;
+    performanceUpdates?: Prisma.MemberPerformanceUncheckedUpdateManyWithoutUpdaterNestedInput;
+};
+export type UserUpsertWithoutPerformanceUpdatesInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutPerformanceUpdatesInput, Prisma.UserUncheckedUpdateWithoutPerformanceUpdatesInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutPerformanceUpdatesInput, Prisma.UserUncheckedCreateWithoutPerformanceUpdatesInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutPerformanceUpdatesInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutPerformanceUpdatesInput, Prisma.UserUncheckedUpdateWithoutPerformanceUpdatesInput>;
+};
+export type UserUpdateWithoutPerformanceUpdatesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    projectMembers?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput;
+    teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput;
+    createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
+    createdTeams?: Prisma.TeamUpdateManyWithoutCreatedByNestedInput;
+    createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
+    assignedTasks?: Prisma.TaskUpdateManyWithoutAssignedToNestedInput;
+    performance?: Prisma.MemberPerformanceUpdateOneWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutPerformanceUpdatesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    projectMembers?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
+    teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput;
+    createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    createdTeams?: Prisma.TeamUncheckedUpdateManyWithoutCreatedByNestedInput;
+    createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
+    assignedTasks?: Prisma.TaskUncheckedUpdateManyWithoutAssignedToNestedInput;
+    performance?: Prisma.MemberPerformanceUncheckedUpdateOneWithoutUserNestedInput;
+};
 export type UserCreateWithoutCreatedProjectsInput = {
     id?: string;
     email: string;
     password: string;
     name: string;
+    role?: $Enums.WorkspaceRole;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     projectMembers?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput;
+    teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput;
+    createdTeams?: Prisma.TeamCreateNestedManyWithoutCreatedByInput;
     createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
     assignedTasks?: Prisma.TaskCreateNestedManyWithoutAssignedToInput;
+    performance?: Prisma.MemberPerformanceCreateNestedOneWithoutUserInput;
+    performanceUpdates?: Prisma.MemberPerformanceCreateNestedManyWithoutUpdaterInput;
 };
 export type UserUncheckedCreateWithoutCreatedProjectsInput = {
     id?: string;
     email: string;
     password: string;
     name: string;
+    role?: $Enums.WorkspaceRole;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     projectMembers?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
+    teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput;
+    createdTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutCreatedByInput;
     createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
     assignedTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutAssignedToInput;
+    performance?: Prisma.MemberPerformanceUncheckedCreateNestedOneWithoutUserInput;
+    performanceUpdates?: Prisma.MemberPerformanceUncheckedCreateNestedManyWithoutUpdaterInput;
 };
 export type UserCreateOrConnectWithoutCreatedProjectsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -400,44 +820,64 @@ export type UserUpdateWithoutCreatedProjectsInput = {
     email?: Prisma.StringFieldUpdateOperationsInput | string;
     password?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     projectMembers?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput;
+    teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput;
+    createdTeams?: Prisma.TeamUpdateManyWithoutCreatedByNestedInput;
     createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
     assignedTasks?: Prisma.TaskUpdateManyWithoutAssignedToNestedInput;
+    performance?: Prisma.MemberPerformanceUpdateOneWithoutUserNestedInput;
+    performanceUpdates?: Prisma.MemberPerformanceUpdateManyWithoutUpdaterNestedInput;
 };
 export type UserUncheckedUpdateWithoutCreatedProjectsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.StringFieldUpdateOperationsInput | string;
     password?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     projectMembers?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
+    teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput;
+    createdTeams?: Prisma.TeamUncheckedUpdateManyWithoutCreatedByNestedInput;
     createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
     assignedTasks?: Prisma.TaskUncheckedUpdateManyWithoutAssignedToNestedInput;
+    performance?: Prisma.MemberPerformanceUncheckedUpdateOneWithoutUserNestedInput;
+    performanceUpdates?: Prisma.MemberPerformanceUncheckedUpdateManyWithoutUpdaterNestedInput;
 };
 export type UserCreateWithoutProjectMembersInput = {
     id?: string;
     email: string;
     password: string;
     name: string;
+    role?: $Enums.WorkspaceRole;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput;
     createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
+    createdTeams?: Prisma.TeamCreateNestedManyWithoutCreatedByInput;
     createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
     assignedTasks?: Prisma.TaskCreateNestedManyWithoutAssignedToInput;
+    performance?: Prisma.MemberPerformanceCreateNestedOneWithoutUserInput;
+    performanceUpdates?: Prisma.MemberPerformanceCreateNestedManyWithoutUpdaterInput;
 };
 export type UserUncheckedCreateWithoutProjectMembersInput = {
     id?: string;
     email: string;
     password: string;
     name: string;
+    role?: $Enums.WorkspaceRole;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput;
     createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    createdTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutCreatedByInput;
     createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
     assignedTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutAssignedToInput;
+    performance?: Prisma.MemberPerformanceUncheckedCreateNestedOneWithoutUserInput;
+    performanceUpdates?: Prisma.MemberPerformanceUncheckedCreateNestedManyWithoutUpdaterInput;
 };
 export type UserCreateOrConnectWithoutProjectMembersInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -457,44 +897,64 @@ export type UserUpdateWithoutProjectMembersInput = {
     email?: Prisma.StringFieldUpdateOperationsInput | string;
     password?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput;
     createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
+    createdTeams?: Prisma.TeamUpdateManyWithoutCreatedByNestedInput;
     createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
     assignedTasks?: Prisma.TaskUpdateManyWithoutAssignedToNestedInput;
+    performance?: Prisma.MemberPerformanceUpdateOneWithoutUserNestedInput;
+    performanceUpdates?: Prisma.MemberPerformanceUpdateManyWithoutUpdaterNestedInput;
 };
 export type UserUncheckedUpdateWithoutProjectMembersInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.StringFieldUpdateOperationsInput | string;
     password?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput;
     createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    createdTeams?: Prisma.TeamUncheckedUpdateManyWithoutCreatedByNestedInput;
     createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
     assignedTasks?: Prisma.TaskUncheckedUpdateManyWithoutAssignedToNestedInput;
+    performance?: Prisma.MemberPerformanceUncheckedUpdateOneWithoutUserNestedInput;
+    performanceUpdates?: Prisma.MemberPerformanceUncheckedUpdateManyWithoutUpdaterNestedInput;
 };
 export type UserCreateWithoutCreatedTasksInput = {
     id?: string;
     email: string;
     password: string;
     name: string;
+    role?: $Enums.WorkspaceRole;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     projectMembers?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput;
+    teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput;
     createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
+    createdTeams?: Prisma.TeamCreateNestedManyWithoutCreatedByInput;
     assignedTasks?: Prisma.TaskCreateNestedManyWithoutAssignedToInput;
+    performance?: Prisma.MemberPerformanceCreateNestedOneWithoutUserInput;
+    performanceUpdates?: Prisma.MemberPerformanceCreateNestedManyWithoutUpdaterInput;
 };
 export type UserUncheckedCreateWithoutCreatedTasksInput = {
     id?: string;
     email: string;
     password: string;
     name: string;
+    role?: $Enums.WorkspaceRole;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     projectMembers?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
+    teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput;
     createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    createdTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutCreatedByInput;
     assignedTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutAssignedToInput;
+    performance?: Prisma.MemberPerformanceUncheckedCreateNestedOneWithoutUserInput;
+    performanceUpdates?: Prisma.MemberPerformanceUncheckedCreateNestedManyWithoutUpdaterInput;
 };
 export type UserCreateOrConnectWithoutCreatedTasksInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -505,22 +965,32 @@ export type UserCreateWithoutAssignedTasksInput = {
     email: string;
     password: string;
     name: string;
+    role?: $Enums.WorkspaceRole;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     projectMembers?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput;
+    teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput;
     createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
+    createdTeams?: Prisma.TeamCreateNestedManyWithoutCreatedByInput;
     createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
+    performance?: Prisma.MemberPerformanceCreateNestedOneWithoutUserInput;
+    performanceUpdates?: Prisma.MemberPerformanceCreateNestedManyWithoutUpdaterInput;
 };
 export type UserUncheckedCreateWithoutAssignedTasksInput = {
     id?: string;
     email: string;
     password: string;
     name: string;
+    role?: $Enums.WorkspaceRole;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     projectMembers?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
+    teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput;
     createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    createdTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutCreatedByInput;
     createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
+    performance?: Prisma.MemberPerformanceUncheckedCreateNestedOneWithoutUserInput;
+    performanceUpdates?: Prisma.MemberPerformanceUncheckedCreateNestedManyWithoutUpdaterInput;
 };
 export type UserCreateOrConnectWithoutAssignedTasksInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -540,22 +1010,32 @@ export type UserUpdateWithoutCreatedTasksInput = {
     email?: Prisma.StringFieldUpdateOperationsInput | string;
     password?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     projectMembers?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput;
+    teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput;
     createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
+    createdTeams?: Prisma.TeamUpdateManyWithoutCreatedByNestedInput;
     assignedTasks?: Prisma.TaskUpdateManyWithoutAssignedToNestedInput;
+    performance?: Prisma.MemberPerformanceUpdateOneWithoutUserNestedInput;
+    performanceUpdates?: Prisma.MemberPerformanceUpdateManyWithoutUpdaterNestedInput;
 };
 export type UserUncheckedUpdateWithoutCreatedTasksInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.StringFieldUpdateOperationsInput | string;
     password?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     projectMembers?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
+    teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput;
     createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    createdTeams?: Prisma.TeamUncheckedUpdateManyWithoutCreatedByNestedInput;
     assignedTasks?: Prisma.TaskUncheckedUpdateManyWithoutAssignedToNestedInput;
+    performance?: Prisma.MemberPerformanceUncheckedUpdateOneWithoutUserNestedInput;
+    performanceUpdates?: Prisma.MemberPerformanceUncheckedUpdateManyWithoutUpdaterNestedInput;
 };
 export type UserUpsertWithoutAssignedTasksInput = {
     update: Prisma.XOR<Prisma.UserUpdateWithoutAssignedTasksInput, Prisma.UserUncheckedUpdateWithoutAssignedTasksInput>;
@@ -571,37 +1051,53 @@ export type UserUpdateWithoutAssignedTasksInput = {
     email?: Prisma.StringFieldUpdateOperationsInput | string;
     password?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     projectMembers?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput;
+    teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput;
     createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
+    createdTeams?: Prisma.TeamUpdateManyWithoutCreatedByNestedInput;
     createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
+    performance?: Prisma.MemberPerformanceUpdateOneWithoutUserNestedInput;
+    performanceUpdates?: Prisma.MemberPerformanceUpdateManyWithoutUpdaterNestedInput;
 };
 export type UserUncheckedUpdateWithoutAssignedTasksInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.StringFieldUpdateOperationsInput | string;
     password?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     projectMembers?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
+    teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput;
     createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    createdTeams?: Prisma.TeamUncheckedUpdateManyWithoutCreatedByNestedInput;
     createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
+    performance?: Prisma.MemberPerformanceUncheckedUpdateOneWithoutUserNestedInput;
+    performanceUpdates?: Prisma.MemberPerformanceUncheckedUpdateManyWithoutUpdaterNestedInput;
 };
 /**
  * Count Type UserCountOutputType
  */
 export type UserCountOutputType = {
     projectMembers: number;
+    teamMembers: number;
     createdProjects: number;
+    createdTeams: number;
     createdTasks: number;
     assignedTasks: number;
+    performanceUpdates: number;
 };
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     projectMembers?: boolean | UserCountOutputTypeCountProjectMembersArgs;
+    teamMembers?: boolean | UserCountOutputTypeCountTeamMembersArgs;
     createdProjects?: boolean | UserCountOutputTypeCountCreatedProjectsArgs;
+    createdTeams?: boolean | UserCountOutputTypeCountCreatedTeamsArgs;
     createdTasks?: boolean | UserCountOutputTypeCountCreatedTasksArgs;
     assignedTasks?: boolean | UserCountOutputTypeCountAssignedTasksArgs;
+    performanceUpdates?: boolean | UserCountOutputTypeCountPerformanceUpdatesArgs;
 };
 /**
  * UserCountOutputType without action
@@ -621,8 +1117,20 @@ export type UserCountOutputTypeCountProjectMembersArgs<ExtArgs extends runtime.T
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountTeamMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.TeamMemberWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountCreatedProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     where?: Prisma.ProjectWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCreatedTeamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.TeamWhereInput;
 };
 /**
  * UserCountOutputType without action
@@ -636,17 +1144,28 @@ export type UserCountOutputTypeCountCreatedTasksArgs<ExtArgs extends runtime.Typ
 export type UserCountOutputTypeCountAssignedTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     where?: Prisma.TaskWhereInput;
 };
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPerformanceUpdatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.MemberPerformanceWhereInput;
+};
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     email?: boolean;
     password?: boolean;
     name?: boolean;
+    role?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
     projectMembers?: boolean | Prisma.User$projectMembersArgs<ExtArgs>;
+    teamMembers?: boolean | Prisma.User$teamMembersArgs<ExtArgs>;
     createdProjects?: boolean | Prisma.User$createdProjectsArgs<ExtArgs>;
+    createdTeams?: boolean | Prisma.User$createdTeamsArgs<ExtArgs>;
     createdTasks?: boolean | Prisma.User$createdTasksArgs<ExtArgs>;
     assignedTasks?: boolean | Prisma.User$assignedTasksArgs<ExtArgs>;
+    performance?: boolean | Prisma.User$performanceArgs<ExtArgs>;
+    performanceUpdates?: boolean | Prisma.User$performanceUpdatesArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["user"]>;
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -654,6 +1173,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
     email?: boolean;
     password?: boolean;
     name?: boolean;
+    role?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
 }, ExtArgs["result"]["user"]>;
@@ -662,6 +1182,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
     email?: boolean;
     password?: boolean;
     name?: boolean;
+    role?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
 }, ExtArgs["result"]["user"]>;
@@ -670,15 +1191,20 @@ export type UserSelectScalar = {
     email?: boolean;
     password?: boolean;
     name?: boolean;
+    role?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
 };
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>;
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "name" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>;
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     projectMembers?: boolean | Prisma.User$projectMembersArgs<ExtArgs>;
+    teamMembers?: boolean | Prisma.User$teamMembersArgs<ExtArgs>;
     createdProjects?: boolean | Prisma.User$createdProjectsArgs<ExtArgs>;
+    createdTeams?: boolean | Prisma.User$createdTeamsArgs<ExtArgs>;
     createdTasks?: boolean | Prisma.User$createdTasksArgs<ExtArgs>;
     assignedTasks?: boolean | Prisma.User$assignedTasksArgs<ExtArgs>;
+    performance?: boolean | Prisma.User$performanceArgs<ExtArgs>;
+    performanceUpdates?: boolean | Prisma.User$performanceUpdatesArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {};
@@ -687,15 +1213,20 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     name: "User";
     objects: {
         projectMembers: Prisma.$ProjectMemberPayload<ExtArgs>[];
+        teamMembers: Prisma.$TeamMemberPayload<ExtArgs>[];
         createdProjects: Prisma.$ProjectPayload<ExtArgs>[];
+        createdTeams: Prisma.$TeamPayload<ExtArgs>[];
         createdTasks: Prisma.$TaskPayload<ExtArgs>[];
         assignedTasks: Prisma.$TaskPayload<ExtArgs>[];
+        performance: Prisma.$MemberPerformancePayload<ExtArgs> | null;
+        performanceUpdates: Prisma.$MemberPerformancePayload<ExtArgs>[];
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: string;
         email: string;
         password: string;
         name: string;
+        role: $Enums.WorkspaceRole;
         createdAt: Date;
         updatedAt: Date;
     }, ExtArgs["result"]["user"]>;
@@ -1028,9 +1559,13 @@ export interface UserDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
     projectMembers<T extends Prisma.User$projectMembersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$projectMembersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    teamMembers<T extends Prisma.User$teamMembersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$teamMembersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     createdProjects<T extends Prisma.User$createdProjectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdProjectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    createdTeams<T extends Prisma.User$createdTeamsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdTeamsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     createdTasks<T extends Prisma.User$createdTasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdTasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     assignedTasks<T extends Prisma.User$assignedTasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignedTasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    performance<T extends Prisma.User$performanceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$performanceArgs<ExtArgs>>): Prisma.Prisma__MemberPerformanceClient<runtime.Types.Result.GetResult<Prisma.$MemberPerformancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    performanceUpdates<T extends Prisma.User$performanceUpdatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$performanceUpdatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MemberPerformancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1060,6 +1595,7 @@ export interface UserFieldRefs {
     readonly email: Prisma.FieldRef<"User", 'String'>;
     readonly password: Prisma.FieldRef<"User", 'String'>;
     readonly name: Prisma.FieldRef<"User", 'String'>;
+    readonly role: Prisma.FieldRef<"User", 'WorkspaceRole'>;
     readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>;
     readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>;
 }
@@ -1461,6 +1997,29 @@ export type User$projectMembersArgs<ExtArgs extends runtime.Types.Extensions.Int
     distinct?: Prisma.ProjectMemberScalarFieldEnum | Prisma.ProjectMemberScalarFieldEnum[];
 };
 /**
+ * User.teamMembers
+ */
+export type User$teamMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TeamMember
+     */
+    select?: Prisma.TeamMemberSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TeamMember
+     */
+    omit?: Prisma.TeamMemberOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.TeamMemberInclude<ExtArgs> | null;
+    where?: Prisma.TeamMemberWhereInput;
+    orderBy?: Prisma.TeamMemberOrderByWithRelationInput | Prisma.TeamMemberOrderByWithRelationInput[];
+    cursor?: Prisma.TeamMemberWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.TeamMemberScalarFieldEnum | Prisma.TeamMemberScalarFieldEnum[];
+};
+/**
  * User.createdProjects
  */
 export type User$createdProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1482,6 +2041,29 @@ export type User$createdProjectsArgs<ExtArgs extends runtime.Types.Extensions.In
     take?: number;
     skip?: number;
     distinct?: Prisma.ProjectScalarFieldEnum | Prisma.ProjectScalarFieldEnum[];
+};
+/**
+ * User.createdTeams
+ */
+export type User$createdTeamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Team
+     */
+    select?: Prisma.TeamSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Team
+     */
+    omit?: Prisma.TeamOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.TeamInclude<ExtArgs> | null;
+    where?: Prisma.TeamWhereInput;
+    orderBy?: Prisma.TeamOrderByWithRelationInput | Prisma.TeamOrderByWithRelationInput[];
+    cursor?: Prisma.TeamWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.TeamScalarFieldEnum | Prisma.TeamScalarFieldEnum[];
 };
 /**
  * User.createdTasks
@@ -1528,6 +2110,47 @@ export type User$assignedTasksArgs<ExtArgs extends runtime.Types.Extensions.Inte
     take?: number;
     skip?: number;
     distinct?: Prisma.TaskScalarFieldEnum | Prisma.TaskScalarFieldEnum[];
+};
+/**
+ * User.performance
+ */
+export type User$performanceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MemberPerformance
+     */
+    select?: Prisma.MemberPerformanceSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MemberPerformance
+     */
+    omit?: Prisma.MemberPerformanceOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.MemberPerformanceInclude<ExtArgs> | null;
+    where?: Prisma.MemberPerformanceWhereInput;
+};
+/**
+ * User.performanceUpdates
+ */
+export type User$performanceUpdatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MemberPerformance
+     */
+    select?: Prisma.MemberPerformanceSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MemberPerformance
+     */
+    omit?: Prisma.MemberPerformanceOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.MemberPerformanceInclude<ExtArgs> | null;
+    where?: Prisma.MemberPerformanceWhereInput;
+    orderBy?: Prisma.MemberPerformanceOrderByWithRelationInput | Prisma.MemberPerformanceOrderByWithRelationInput[];
+    cursor?: Prisma.MemberPerformanceWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.MemberPerformanceScalarFieldEnum | Prisma.MemberPerformanceScalarFieldEnum[];
 };
 /**
  * User without action

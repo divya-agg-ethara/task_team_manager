@@ -27,6 +27,9 @@ export declare const JsonNull: import("@prisma/client-runtime-utils").JsonNullCl
 export declare const AnyNull: import("@prisma/client-runtime-utils").AnyNullClass;
 export declare const ModelName: {
     readonly User: "User";
+    readonly Team: "Team";
+    readonly TeamMember: "TeamMember";
+    readonly MemberPerformance: "MemberPerformance";
     readonly Project: "Project";
     readonly ProjectMember: "ProjectMember";
     readonly Task: "Task";
@@ -44,14 +47,44 @@ export declare const UserScalarFieldEnum: {
     readonly email: "email";
     readonly password: "password";
     readonly name: "name";
+    readonly role: "role";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
 };
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum];
+export declare const TeamScalarFieldEnum: {
+    readonly id: "id";
+    readonly name: "name";
+    readonly description: "description";
+    readonly createdById: "createdById";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+};
+export type TeamScalarFieldEnum = (typeof TeamScalarFieldEnum)[keyof typeof TeamScalarFieldEnum];
+export declare const TeamMemberScalarFieldEnum: {
+    readonly id: "id";
+    readonly teamId: "teamId";
+    readonly userId: "userId";
+    readonly role: "role";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+};
+export type TeamMemberScalarFieldEnum = (typeof TeamMemberScalarFieldEnum)[keyof typeof TeamMemberScalarFieldEnum];
+export declare const MemberPerformanceScalarFieldEnum: {
+    readonly id: "id";
+    readonly userId: "userId";
+    readonly score: "score";
+    readonly note: "note";
+    readonly updatedById: "updatedById";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+};
+export type MemberPerformanceScalarFieldEnum = (typeof MemberPerformanceScalarFieldEnum)[keyof typeof MemberPerformanceScalarFieldEnum];
 export declare const ProjectScalarFieldEnum: {
     readonly id: "id";
     readonly name: "name";
     readonly description: "description";
+    readonly teamId: "teamId";
     readonly createdById: "createdById";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";

@@ -24,5 +24,7 @@ const authRouter = (0, express_1.Router)();
 authRouter.post("/signup", authLimiter, (0, validate_1.validate)(auth_validation_1.signupSchema), auth_controller_1.signup);
 authRouter.post("/login", authLimiter, (0, validate_1.validate)(auth_validation_1.loginSchema), auth_controller_1.login);
 authRouter.get("/me", authenticate_1.authenticate, loadCurrentUser_1.loadCurrentUser, auth_controller_1.getMe);
+authRouter.patch("/me", authenticate_1.authenticate, loadCurrentUser_1.loadCurrentUser, (0, validate_1.validate)(auth_validation_1.updateProfileSchema), auth_controller_1.updateMe);
+authRouter.patch("/password", authenticate_1.authenticate, loadCurrentUser_1.loadCurrentUser, (0, validate_1.validate)(auth_validation_1.changePasswordSchema), auth_controller_1.changePassword);
 exports.default = authRouter;
 //# sourceMappingURL=auth.routes.js.map

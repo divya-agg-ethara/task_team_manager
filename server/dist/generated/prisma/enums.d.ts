@@ -1,3 +1,13 @@
+export declare const WorkspaceRole: {
+    readonly ADMIN: "ADMIN";
+    readonly MEMBER: "MEMBER";
+};
+export type WorkspaceRole = (typeof WorkspaceRole)[keyof typeof WorkspaceRole];
+export declare const TeamMemberRole: {
+    readonly ADMIN: "ADMIN";
+    readonly MEMBER: "MEMBER";
+};
+export type TeamMemberRole = (typeof TeamMemberRole)[keyof typeof TeamMemberRole];
 export declare const ProjectRole: {
     readonly ADMIN: "ADMIN";
     readonly MEMBER: "MEMBER";

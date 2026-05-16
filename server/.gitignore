@@ -1,5 +1,8 @@
 node_modules
+dist
 # Keep environment variables out of version control
 .env
+.env.local
 
+# Prisma client is generated at build time (see npm run build)
 src/generated

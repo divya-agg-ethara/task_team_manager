@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginSchema = exports.signupSchema = void 0;
+exports.changePasswordSchema = exports.updateProfileSchema = exports.loginSchema = exports.signupSchema = void 0;
 const zod_1 = require("zod");
 const emailSchema = zod_1.z
     .string({ error: "Email is required" })
@@ -26,5 +26,20 @@ exports.signupSchema = zod_1.z.object({
 exports.loginSchema = zod_1.z.object({
     email: emailSchema,
     password: zod_1.z.string({ error: "Password is required" }).min(1, "Password is required"),
+});
+exports.updateProfileSchema = zod_1.z.object({
+    name: nameSchema,
+});
+exports.changePasswordSchema = zod_1.z
+    .object({
+    currentPassword: zod_1.z
+        .string({ error: "Current password is required" })
+        .min(1, "Current password is required"),
+    newPassword: passwordSchema,
+    confirmPassword: zod_1.z.string({ error: "Please confirm your new password" }),
+})
+    .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
 });
 //# sourceMappingURL=auth.validation.js.map

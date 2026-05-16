@@ -48,7 +48,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.TaskScalarFieldEnum = exports.ProjectMemberScalarFieldEnum = exports.ProjectScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
+exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.TaskScalarFieldEnum = exports.ProjectMemberScalarFieldEnum = exports.ProjectScalarFieldEnum = exports.MemberPerformanceScalarFieldEnum = exports.TeamMemberScalarFieldEnum = exports.TeamScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
 const runtime = __importStar(require("@prisma/client/runtime/index-browser"));
 exports.Decimal = runtime.Decimal;
 exports.NullTypes = {
@@ -76,6 +76,9 @@ exports.JsonNull = runtime.JsonNull;
 exports.AnyNull = runtime.AnyNull;
 exports.ModelName = {
     User: 'User',
+    Team: 'Team',
+    TeamMember: 'TeamMember',
+    MemberPerformance: 'MemberPerformance',
     Project: 'Project',
     ProjectMember: 'ProjectMember',
     Task: 'Task'
@@ -94,6 +97,32 @@ exports.UserScalarFieldEnum = {
     email: 'email',
     password: 'password',
     name: 'name',
+    role: 'role',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+exports.TeamScalarFieldEnum = {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    createdById: 'createdById',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+exports.TeamMemberScalarFieldEnum = {
+    id: 'id',
+    teamId: 'teamId',
+    userId: 'userId',
+    role: 'role',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+exports.MemberPerformanceScalarFieldEnum = {
+    id: 'id',
+    userId: 'userId',
+    score: 'score',
+    note: 'note',
+    updatedById: 'updatedById',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };
@@ -101,6 +130,7 @@ exports.ProjectScalarFieldEnum = {
     id: 'id',
     name: 'name',
     description: 'description',
+    teamId: 'teamId',
     createdById: 'createdById',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
