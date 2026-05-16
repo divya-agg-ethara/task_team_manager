@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
+
   // Helps on Windows when OneDrive or antivirus locks files during HMR.
   webpack: (config, { dev }) => {
     if (dev) {
